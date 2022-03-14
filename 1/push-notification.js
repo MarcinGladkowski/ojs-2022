@@ -5,3 +5,5 @@ class PushNotification {
     }
 
 }
+
+module.exports = PushNotification;

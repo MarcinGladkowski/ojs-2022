@@ -5,3 +5,5 @@ const smsService = {
     }
 
 }
+
+module.exports = smsService;
