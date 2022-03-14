@@ -9,4 +9,6 @@ game.move('paper', 'rock')
 const storedGame = JSON.stringify(game)
 const loadedGame = JSON.parse(storedGame)
 
-loadedGame.move('paper', 'scissors')
+const instanceToLoadState = new gameConstructor(loadedGame.p1Wins, loadedGame.p2Wins);
+
+instanceToLoadState.move('paper', 'scissors')

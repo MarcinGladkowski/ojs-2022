@@ -1,8 +1,8 @@
 class RockPaperScissors {
 
-    constructor() {
-        this.p1Wins = 0
-        this.p2Wins = 0
+    constructor(p1Wins = 0, p2Wins = 0) {
+        this.p1Wins = p1Wins
+        this.p2Wins = p2Wins
     }
 
     move(decisionP1, decisionP2) {
