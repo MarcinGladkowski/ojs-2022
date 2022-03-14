@@ -20,6 +20,8 @@
     <script>
         const names = ['Adam', 'Marek', 'Basia', 'Kasia', 'Janek', 'Tomek']
 
+        console.log("Overwrite forEach function on Array prototype: ", Array.prototype.forEach)
+
         names.forEach(name => {
             console.log(name)
             // WTF?!
@@ -30,6 +32,8 @@
             maxDiff: 'easy',
             mapName: 'de-dust'
         }
+
+        console.log("Overwrite implementation values function", Object.values)
 
         console.log(Object.values(state).length) // WTF?!
     </script>
