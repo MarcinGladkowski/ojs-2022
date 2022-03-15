@@ -13,26 +13,56 @@ function fetchData(params, onSuccess, onError) {
     req.send(null);
 }
 
+/**
+ *
+ * Return promise
+ *
+ * @param userId
+ * @param onSuccess
+ * @param onError
+ * @returns {Promise<void>}
+ */
 function fetchProfile(userId, onSuccess, onError) {
     fetchData({ method: 'GET', url: `http://localhost:8080/app/profile/${userId}`}, onSuccess, onError)
 }
 
-function fetchPaymentDetails(userId, onSuccess, onError) {
+async function fetchPaymentDetails(userId, onSuccess, onError) {
     fetchData({ method: 'GET', url: `http://localhost:8080/app/payments/${userId}`}, onSuccess, onError)
 }
 
-var userProfile = null
-var userId = 4
+let userProfile = null
+const userId = 4
 
-fetchProfile(userId, (profile) => {
+const fetchPromise = new Promise((resolve, reject) => {
+    fetchData({ method: 'GET', url: `http://localhost:8080/app/profile/${userId}`},
+        (response) => {
+            resolve(response)
+        }, (error) => {
+            reject(error)
+        })
+})
+
+const fetchDetails = new Promise((resolve, reject) => {
+    fetchData({ method: 'GET', url: `http://localhost:8080/app/payments/${userId}`},
+        (response) => {
+            resolve(response)
+        }, (error) => {
+            reject(error)
+        })
+})
+
+
+fetchPromise.then((profile) => {
     userProfile = profile
-}, () => {
-    window.alert('Cannot fetch profile!')
+}).then(() => {
+
+    fetchPaymentDetails(userId, (payments) => {
+        document.querySelector('#user-name').textContent = `User: ${userProfile.firstName} ${userProfile.lastName}`
+        document.querySelector('#user-subscription').textContent = `Subscription: ${payments.subscriptionStatus}`
+    }, () => {
+        window.alert('Cannot fetch payment details!')
+    })
 })
 
-fetchPaymentDetails(userId, (payments) => {
-    document.querySelector('#user-name').textContent = `User: ${userProfile.firstName} ${userProfile.lastName}`
-    document.querySelector('#user-subscription').textContent = `Subscription: ${payments.subscriptionStatus}`
-}, () => {
-    window.alert('Cannot fetch payment details!')
-})
+
+
